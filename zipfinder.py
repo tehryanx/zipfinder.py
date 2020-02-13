@@ -40,20 +40,25 @@ def generate_filenames(path):
 			filenames.append(path + "/" + repeat_last_dir + "." + ext)
 	return filenames
 
-for line in fileinput.input():
-	paths = parse_paths(line.strip())
-	for path in paths:
-		all_paths.append(path)
+if fileinput.input():
+	for line in fileinput.input():
+		paths = parse_paths(line.strip())
+		if paths:
+			for path in paths:
+				all_paths.append(path)
 
-uniq_paths = set(all_paths)
+	uniq_paths = set(all_paths)
 
-for path in uniq_paths:
-	filenames = generate_filenames(path)
-	for filename in filenames:
-		all_filenames.append(filename)
+if uniq_paths:
+	for path in uniq_paths:
+		filenames = generate_filenames(path)
+		if filenames: 
+			for filename in filenames:
+				all_filenames.append(filename)
 
-uniq_filenames = set(all_filenames)
+	uniq_filenames = set(all_filenames)
 
-for item in uniq_filenames:
-	print(item[1:])
+if uniq_filenames:
+	for item in uniq_filenames:
+		print(item[1:])
 
